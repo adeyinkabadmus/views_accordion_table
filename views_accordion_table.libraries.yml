@@ -1,0 +1,11 @@
+accordion_table:
+  version: 1.x
+  css:
+    theme:
+      css/views-accordion-table.css: {}
+  js:
+    js/views-accordion-table.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once

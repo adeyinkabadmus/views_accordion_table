@@ -1,0 +1,21 @@
+/* Only essential accordion functionality */
+.views-accordion-table-wrapper .accordion-header {
+  cursor: pointer;
+  position: relative;
+}
+
+.views-accordion-table-wrapper .accordion-header:after {
+  content: '▼';
+  position: absolute;
+  right: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.views-accordion-table-wrapper .accordion-header.is-open:after {
+  transform: rotate(180deg);
+}
+
+/* Debug info - can be removed in production */
+.debug-info {
+  display: none;
+}

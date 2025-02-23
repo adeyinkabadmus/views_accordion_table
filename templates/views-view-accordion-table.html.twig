@@ -1,0 +1,82 @@
+{#
+/**
+ * @file
+ * Default theme implementation for displaying a view as an accordion table.
+ *
+ * Available variables:
+ * - view: The view object.
+ * - rows: A list of the view's row items.
+ * - options: The view plugin style options.
+ * - groups: Rows grouped by field.
+ * - header: Table header fields.
+ * - attributes: Table attributes.
+ *
+ * @see template_preprocess_views_view_accordion_table()
+ *
+ * @ingroup themeable
+ */
+#}
+
+{% if groups %}
+  <div class="accordion" id="viewsAccordion">
+    {% for group_id, group_rows in groups %}
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="heading{{ loop.index }}">
+          <button class="accordion-button{% if not options.accordion_initially_open %} collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}" aria-expanded="{{ options.accordion_initially_open ? 'true' : 'false' }}" aria-controls="collapse{{ loop.index }}">
+            {{ group_id }}
+          </button>
+        </h2>
+        <div id="collapse{{ loop.index }}" class="accordion-collapse collapse{% if options.accordion_initially_open %} show{% endif %}" aria-labelledby="heading{{ loop.index }}" data-bs-parent="#viewsAccordion">
+          <div class="accordion-body p-0">
+            <table{{ attributes }}>
+              {% if header %}
+                <thead>
+                  <tr>
+                    {% for field, field_info in header %}
+                      <th{{ field_info.attributes }}>
+                        {{ field_info.content }}
+                      </th>
+                    {% endfor %}
+                  </tr>
+                </thead>
+              {% endif %}
+              <tbody>
+                {% for row in group_rows %}
+                  <tr>
+                    {% for field, content in row %}
+                      <td>{{ content|raw }}</td>
+                    {% endfor %}
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  {# Fallback to regular table if no grouping is used #}
+  <table{{ attributes }}>
+    {% if header %}
+      <thead>
+        <tr>
+          {% for field, field_info in header %}
+            <th{{ field_info.attributes }}>
+              {{ field_info.content }}
+            </th>
+          {% endfor %}
+        </tr>
+      </thead>
+    {% endif %}
+    <tbody>
+      {% for row in rows %}
+        <tr>
+          {% for field, content in row %}
+            <td>{{ content|raw }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
