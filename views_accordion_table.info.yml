@@ -1,0 +1,8 @@
+name: Views Accordion Table
+type: module
+description: 'Provides an accordion style plugin for Views tables with grouping.'
+package: Views
+core_version_requirement: ^9 || ^10
+dependencies:
+  - drupal:views
+configure: views_accordion_table.settings
